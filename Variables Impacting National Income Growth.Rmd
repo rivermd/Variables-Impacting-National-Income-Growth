@@ -1,0 +1,498 @@
+---
+title: "Variables Impacting National Income Growth"
+Names: Dyanna Rivera, Tomas Vintimilla, Carlo Pastor
+output:
+  html_document:
+    df_print: paged
+---
+## Abstract
+This study examines various factors that may contribute to the income growth of a country. The leading research question was, which factor exactly is the most important? Based on previous research and observations regarding the topic (both on a macro and micro level), it was hypothesized that investment on research development would be the most significant independent variable in the model, with investment in trade and then level of education as the least significant variable. A multiple variable linear regression model was built and tested, where it was found that contrary to the hypothesis, education level was not deemed a significant predictor of national income growth. Investment in trade was deemed as significant, but should undergo a different approach in analysis as an analysis of residuals found a high degree of multicollinearity between investment in imports and investment in exports (which were the two variables measured for investment in trade). Research and development was deemed to be the most significant independent variable in the model. Thus, further research should focus on this aspect and further interactions with other variables in different approaches.
+
+Keywords: research, development, imports, exports, international trade, GDP growth, national income, education level, macroeconomics, college education
+
+We will be looking at the impact of different factors on a country’s national income. 
+
+Before beginning, it’s important to first begin identifying contributory factors based on previous research regarding this topic. In a study conducted to investigate the effect of education level on individual household income (Stavkova & Turcinkova, 2012), it was concluded that in general, the households with the lowest mean education were the ones that were at the highest risk of poverty, i.e. had a lower mean income. However, it was also found that a higher level of education did not guarantee a higher income. In the same research, the households with the lowest income were the ones headed by a person with the highest level of education (tertiary education). The notion that education is correlated with higher levels of individual income was further supported by other sources. “Median weekly earnings in 2017 for those with the highest levels of educational attainment—doctoral and professional degrees—were more than triple those with the lowest level, less than a high school diploma. And workers with at least a bachelor's degree earned more than the $907 median weekly earnings for all workers” (Torpey, 2018) according to the U.S. Bureau of Labor Statistics. This suggests that the more educated an individual is, the better their prospects may be for a high income. Another study conducted by a researcher at Thuongmai University “found that education has a positive effect on the household income after controlling for various factors in the models. However, quantile regression analysis reveals that the effect of schooling years increases with quantiles, suggesting that education brings higher returns for richer households” (Vu, 2020). Given these findings, we can conclude that education level is not only correlated with higher levels of individual income, but that it does indeed cause it. Interestingly, this only held true for tertiary levels of education and not with education at a secondary level or below. In a separate study, it was found that “when education is disaggregated into its levels, only the tertiary education has the highest (and significant) effect on the income per capita, while the estimates for the primary and secondary education are not significant” (Akguc, 2010). This may come contrary to intuition, as many people believe that more education immediately leads to better employment prospects. However, considering that many of the jobs that are available to adolescents completing secondary education do not require even a high school diploma, it makes sense that the effect of any education level below the tertiary may be considered negligible. 
+
+But this education comes at a cost. After all, it isn’t free to fund the resources required for a tertiary education, or any kind of job training for that matter. A paper published by The World Bank indicates that the “OECD (1998, Figure 4.4) reports social rates of return to different levels of education, calculated for various OECD countries. ‘Social’ rates are consistently found to be lower than private ones” (Reenen & Sianesi, 2003). In other words, yes, it is worth it to invest in higher education. However, this investment primarily benefits the individual on a short-term scale rather than impacting the economy at a macro level right away. However, a later study found evidence challenging this claim. “Based on the improved Barro and Lee dataset (2013), this paper finds a positive macroeconomic impact of the share of tertiary education, both in terms of per capita GDP levels and growth rates” (Dufrechou, 2016). This research suggests that tertiary levels of education still do impact the economy at a macro level. However the previous claim still stands that any education at or below a high school diploma has a negligible effect on national economy, instead working to serve the individual. 
+
+But going back to the effects of education on a macro level - how exactly should this be measured? One possibility is by looking at income inequality in regions and the relationship between this and education levels. The results of an independent study on this effect show that initially primary and secondary enrollment increases inequality while tertiary enrollment decreases it (Anwar, Kousar, et al., 2018). Such research further enforces the previously stated point that the benefits of a tertiary education are widespread. Another way to measure this effect is by looking at a country’s GDP. “GDP is not meant to be a measure of economic welfare, and other considerations are important in fully assessing the costs and benefits of policy changes” (Stone, 2017). While GDP is good for indicating general market activity, it doesn’t measure individual economic welfare. However, considering that what we are interested in is national economic welfare, it serves as a step in the right direction. 
+
+Now, looking at other factors that may contribute to the economic welfare of a country, investment in research and development holds a strong correlation with high competitive value within the international market. In a paper discussing the impact of research and development expenditures on economic growth, it was concluded that “if a country’s R&D intensity is high, in that situation, the national competitiveness of this country would be much higher than in other countries” (Ildirar, İşcan, & Özmen, 2016). This indicates that countries with generally higher rates of innovation may be more likely to fare better economically than their less innovative counterparts, as these are the countries pushing economic growth forward. Other research supports this conclusion, stating that “ultimately, a positive relationship between GDP per capita in 2011 and R&D expenditures in 2008 was uncovered” (Gendron, Maredia, & Surani, 2017) in their findings. Overall, the consensus among several studies is that research and development is worth the investment for many companies, although “investment in public research in low-income countries is unlikely to lead to substantial levels of direct commercialisation of research outputs in the short to medium term” (Newman, 2014). Therefore, research and development is generally a good idea, but may prove more beneficial to wealthier countries who have the resources necessary to continue expanding their production. 
+
+While research and development certainly helps account for economic growth domestically, it is also important to consider the role that investment in international trade may have on an economy’s health. A paper published in the journal, Science Direct, mentions that “various factors, such as political, economic, and practical factors can affect the growth of international trade” (Dubravska & Sira, 2015). In the same study, researchers found that political instability acted as an indirect barrier to trade growth, being the cause for “many nations [placing] steep tariffs on exports or imports from certain nations or industries for such reasons” (Dubravska & Sira, 2015). However, since the study we will be conducting is primarily focused on economic factors, we will pay closer attention to the role of trade growth specifically. According to an article published in the Economic Research Federal Reserve Bank of St. Louis journal, “the purchase of domestic goods and services should increase GDP, but the purchase of imported goods and services should have no direct impact on GDP” (Wolla, 2018), meaning that a country’s expenditure on imports shouldn’t have a significant effect on its GDP. This doesn’t discount the importance of investing in imported trade, though. In an article published by A&A, it’s highlighted how “many businesses today find importing products, parts of products and resources more affordable than producing them locally” (A&A, n.d.). One of the primary benefits of buying imported goods is that it allows countries access to resources they may not otherwise have, making it worth the investment in the long term. Along this same train of thought, the quality of a workforce should also be looked at as an economic resource. As explained in an article by Investopedia, “The skilled labor force can produce relatively more per person than the unskilled force, which in turn impacts the areas in which each can find a comparative advantage. The country with skilled labor might design complex electronics, while the unskilled labor force might specialize in basic manufacturing” (Investopedia, 2020). Therefore, the investment in both imports and exports is the other important factor to take into consideration when evaluating the factors that contribute to a country’s economic growth. 
+
+Given the literature, we hypothesized that research and development would be the strongest factors on national economic income growth, followed by investment in trade, and then finally education.
+
+For the purposes of this study, we extracted our data from the OECD, given that it is a reliable source of information when it comes to economic data. Furthermore, the OECD provides an abundance of resources for macroeconomic research, such as this project. Education levels were analyzed in three parts: below upper secondary (not having completed high school), upper secondary (having attained a high school diploma), and tertiary (education after high school). For all factors, a sample of 30 countries was taken, with one observation (from 2019) per each country.
+
+
+Checking for Normality in Sample Distributions with Histograms ----
+```{r}
+#load the readxl library so R Studio can read the data sets and construct histograms of each variable's distribution.
+library("readxl")
+
+education <- read_excel("/Users/dyannarivera/Escuela/Data Analysis/Final Project/EduData.xls")
+income <- read_excel("/Users/dyannarivera/Escuela/Data Analysis/Final Project/Income Data.xls")
+tradeexport <- read_excel("/Users/dyannarivera/Escuela/Data Analysis/Final Project/Trade_Goods_Services_percent_GDP_Exports_RV.xls")
+tradeimport <- read_excel("/Users/dyannarivera/Escuela/Data Analysis/Final Project/Trades_Goods_Services_Percent_GDP_Imports.xlsx")
+rdspending <- read_excel("/Users/dyannarivera/Escuela/Data Analysis/Final Project/RD_Spending_GDP.xlsx")
+
+View(education)
+education$LEVEL
+
+```
+Because the levels of education are qualitative rather than quantitative variables, we must first convert them into dummy variables before moving forward with a full descriptive analysis.
+
+```{r}
+incomegrowth <- education$Income
+edlevel <- education$LEVEL
+unique(edlevel)
+
+edlevel <- factor(edlevel)
+str(edlevel)
+
+contrasts(edlevel)
+dummymodel <- lm(incomegrowth ~ edlevel)
+summary(dummymodel)
+```
+
+Because there are three levels of education, we can see that we have three different dummy variables now and parameter estimates for each. We will refer back to this later when building our model. Now, let's look at the sample population distributions for all our variables. We will exclude a descriptive analysis of our dummy variables because they are discrete rather than continuous variables. In this case, we will assume normality for those, since the sample size is 30 and therefore satisfies the Central Limit Theorem.
+
+
+```{r}
+incomedata <- c(income$PERCENT)
+hist(incomedata, breaks = 29, TRUE, col = "orange", border = "black", lty = 1)
+
+tradeexportdata <- c(tradeexport$Value)
+hist(tradeexportdata, breaks = 29, TRUE, col = "blue", border = "black", lty = 1)
+
+tradeimportdata <- c(tradeimport$Value)
+hist(tradeimportdata, breaks = 29, TRUE, col = "yellow", border = "black", lty = 1)
+
+rdspendingdata <- c(rdspending$Value)
+hist(rdspendingdata, breaks = 29, TRUE, col = "green", border = "black", lty = 1)
+```
+
+The histograms for each sample population can provide us insight into the distributions of each variable sample. The annual percentage growth rate of real net disposable income has a heavy right skew after eliminating missing values (indicated by a 0). The percentage of GDP spent on R&D is approximately normal after accounting for missing values (indicated by 0). The percentage of GDP for net trade imports has a right skew, as does the percentage of GDP for net trade exports (with two outliers -  Ireland at 126% and Luxembourg at 208% growth from net trade exports) Because of these skews, we can conclude that the median is the best measure of central tendency for the data. 
+
+```{r}
+#boxplot for trade export data
+boxplot(tradeexportdata, width = 10, varwidth = TRUE, notch = FALSE, outline = TRUE, names = "Percentage of GDP growth in net trade Exports", plot = TRUE, horizontal = TRUE)
+
+#boxplot for trade import data
+boxplot(tradeimportdata, width = 10, varwidth = TRUE, notch = FALSE, outline = TRUE, names = "Percentage of GDP growth in net trade Imports", plot = TRUE, horizontal = TRUE)
+
+#boxplot for r&d data
+boxplot(rdspendingdata, width = 10, varwidth = TRUE, notch = FALSE, outline = TRUE, names = "Percentage of GDP Spent on R&D", plot = TRUE, horizontal = TRUE)
+
+#boxplot for incomedata
+boxplot(incomedata, width = 10, varwidth = TRUE, notch = FALSE, outline = TRUE, names = "Annual Growth Rate Percentage of Real Net Disposable Income", plot = TRUE, horizontal = TRUE)
+```
+Checking for Outliers with Boxplot Analysis 
+```{r}
+#export data
+medex <- median(tradeexportdata)
+exq1 <- quantile(tradeexportdata, 0.25)
+exq3 <- quantile(tradeexportdata, 0.75)
+exmin <- min(tradeexportdata)
+exmax <- max(tradeexportdata)
+exiqr <- exq3 - exq1
+
+cat("The median observed percentage growth of a country's GDP as a result of trade exports is %", medex, ". The first quartile is at approximately %", exq1, " and the third quartile is at approximately %", exq3, ". This means that at least %25 of observations (countries) in the sample population have %", exq1, " of GDP growth from trade exports and at least %75 of observations have %", exq3, " of GDP growth from trade exports. This also gives us an IQR value of ", exiqr, ". The minimum observed percentage of GDP growth from exports is %", exmin, " and the maximum observed percentage is %", exmax, ". There is one outlier at %", exmax, " GDP growth from exports in Luxembourg." )
+
+#import data
+medim <- median(tradeimportdata)
+imq1 <- quantile(tradeimportdata, 0.25)
+imq3 <- quantile(tradeimportdata, 0.75)
+immin <- min(tradeimportdata)
+immax <- max(tradeimportdata)
+imiqr <- imq3 - imq1
+
+cat("\n
+The median observed percentage growth of a country's GDP as a result of trade imports is %", medim, ". The first quartile is at approximately %", imq1, " and the third quartile is at approximately %", imq3, ". This means that at least %25 of observations (countries) in the sample population have %", imq1, " of GDP growth from trade imports and at least %75 of observations have %", imq3, " of GDP growth from trade imports. This also gives us an IQR value of ", imiqr, ". The minimum observed percentage of GDP growth from imports is %", immin, " and the maximum observed percentage is %", immax, ". There is one outlier at %", immax, " GDP growth from imports in Luxembourg" )
+
+#r&d data
+medrd <- median(rdspendingdata)
+rdq1 <- quantile(rdspendingdata, 0.25)
+rdq3 <- quantile(rdspendingdata, 0.75)
+rdmin <- min(rdspendingdata)
+rdmax <- max(rdspendingdata)
+rdiqr <- rdq3 - rdq1
+
+cat("\n
+The median observed percentage of a country's GDP spent on R&D is approximately %", medrd, ". The first quartile is at approximately %", rdq1, " and the third quartile is at approximately %", rdq3, ". This means that at least %25 of observations (countries) in the sample population spent %", rdq1, " of their GDP on R&D and at least %75 of observations spent %", rdq3, " of their GDP on R&D. This also gives us an IQR value of ", rdiqr, ". The minimum observed percentage of GDP spent on R&D is %", rdmin, " and the maximum observed percentage is %", rdmax, ". There are no outliers in this sampling distribution.")
+
+#incomedata
+medincome <- median(incomedata)
+incomeq1 <- quantile(incomedata, 0.25)
+incomeq3 <- quantile(incomedata, 0.75)
+incomemin <- min(incomedata)
+incomemax <- max(incomedata)
+incomeiqr <- incomeq3 - incomeq1
+
+cat("\n
+The median observed annual growth percentage of real net disposable income is approximately %", medincome, ". The first quartile is at approximately %", incomeq1, " and the third quartile is at approximately %", incomeq3, ". This means that at least %25 of observations (countries) in the sample population had an annual growth percentage of real net disposable income of approximately %", incomeq1, " and at least %75 of observations had an annual growth percentage of real net disposable income of approximately %", incomeq3, ". This also gives us an IQR value of ", incomeiqr, ". The minimum observed annual growth percentage of real net disposable income is %", incomemin, " and the maximum observed percentage is %", incomemax, ". There are three outliers at the values of %6.19 (Poland), %6.49 (Estonia), and %6.75 (Lithuania) which indicates a right skew as indicated in the histogram above." )
+```
+
+Sample Descriptive Statistics 
+
+Below are the means for each variable sample.
+```{r}
+exmean <- mean(tradeexportdata)
+cat("The mean percentage of GDP growth from trade exports is, %", exmean, ".")
+
+immean <- mean(tradeimportdata)
+cat("\n
+The mean percentage of GDP growth from trade imports is, %", immean, ". ")
+
+rdmean <- mean(rdspendingdata)
+cat("\n
+The mean percentage of GDP spent on R&D is, %", rdmean, ". ")
+
+incomemean <- mean(income$PERCENT)
+cat("\n
+The mean annual growth rate percentage of real net disposable income is, %", incomemean, ". ")
+```
+Below are the standard deviation values for each variable sample.
+```{r}
+exsd <- sd(tradeexportdata)
+cat("The sample population standard deviation for GDP growth from trade exports is %", exsd, ". ")
+
+imsd <- sd(tradeimportdata)
+cat("\n
+The sample population standard deviation for GDP growth from trade imports is %", imsd, ".")
+
+rdsd <- sd(rdspendingdata)
+cat("\n
+The sample population standard deviation of percentage of GDP spent on R&D is %",rdsd, ".")
+
+incomesd <- sd(incomedata)
+cat("\n
+The sample population standard deviation for the annual growth rate percentage of real net disposable income is, %", incomesd, ".")
+```
+
+Checking the Linear Relationship and Correlation Between Variables 
+Now we can assess the covariance between each variable and disposable income growth rates.
+```{r}
+excov <- cov(tradeexportdata, incomedata)
+cat("The covariance between the sample population percentage of GDP growth due to trade exports and the annual growth rate percentage of real net disposable income is, ", excov, ". This indicates a positive linear relationship between the percentage of GDP growth due to trade exports and that country's annual growth rate percentage of real net disposable income.")
+
+imcov <- cov(tradeimportdata, incomedata)
+cat("
+\nThe covariance between the sample population percentage of GDP growth due to trade imports and the annual growth rate percentage of real net disposable income is, ", imcov, ". This indicates a positive linear relationship between the percentage of GDP growth due to trade imports and that country's annual growth rate percentage of real net disposable income.")
+
+rdcov <- cov(rdspendingdata, incomedata)
+cat("
+\nThe covariance between the sample population percentage of GDP spent on R&D and the annual growth rate percentage of real net disposable income is, ", rdcov, ". This indicates a negative linear relationship between the percentage of a country's GDP that is spent on R&D and that country's annual growth rate percentage of real net disposable income.")
+```
+
+Next, the correlation between each variable and disposable income growth rates is assessed.
+```{r}
+plot(tradeexportdata, incomedata)
+excor <- cor(tradeexportdata, incomedata)
+cat("The correlation coefficient between the percentage of GDP growth due to trade exports  and that country's annual growth rate percentage of real net disposable income is ", excor, ". This indicates a very weak, positive correlation between the percentage of GDP growth due to trade exports and a country's annual growth rate percentage of real net disposable income." )
+
+plot(tradeimportdata, incomedata)
+imcor <- cor(tradeimportdata, incomedata)
+cat("\n
+The correlation coefficient between the percentage of GDP growth due to trade imports and that country's annual growth rate percentage of real net disposable income is ", imcor, ". This indicates a weak, positive correlation between the percentage of GDP growth due to trade imports and that country's annual growth rate percentage of real net disposable income.")
+
+plot(rdspendingdata, incomedata)
+rdcor <- cor(rdspendingdata, incomedata)
+cat("\n
+The correlation coefficient between the percentage of a country's GDP spent on R&D and that country's annual growth rate percentage of real net disposable income is ", rdcor, ". This indicates a weak, negative correlation between the percentage of a country's GDP spent on R&D and that country's annual growth rate percentage of real net disposable income.")
+```
+## Building the Multiple Linear Regression Model
+
+First, we begin by fitting the complete model, with interactions between the dependent variables. We will also look at our dummy variables again for education levels. 
+```{r}
+importgrowth <- education$GDP_IMPORTS
+exportgrowth <- education$GDP_EXPORTS
+rdexpenditure <- education$RD_SPENDING_GDP
+
+complete_model <- lm(incomegrowth ~ edlevel + importgrowth + exportgrowth + rdexpenditure + edlevel:importgrowth + edlevel:exportgrowth + edlevel:rdexpenditure + importgrowth:exportgrowth + importgrowth:rdexpenditure + exportgrowth:rdexpenditure)
+summary(complete_model)
+```
+
+We will also run a reduced version of the model.
+```{r}
+reduced_model <- lm(incomegrowth ~ edlevel + importgrowth + exportgrowth + rdexpenditure)
+summary(reduced_model)
+```
+
+To compare the two models and see which one is best, we can run a nested F-Test
+```{r}
+nested_f_test<-anova(reduced_model, complete_model)
+nested_f_test
+```
+Since the p value of the f test is greater than alpha = 0.05, we choose the reduced model. There is insufficient evidence to indicate significant interaction between variables at alpha = 0.05.
+
+So now that there is a base model to work with, the individual dependent variables can be assessed for importance to further reduce the model. To do this, the step-wise regression method will be applied.
+
+```{r}
+step.model<-step(lm(incomegrowth ~ edlevel + importgrowth + exportgrowth + rdexpenditure),direction="both")
+summary(step.model)
+```
+After applying a forward step-wise procedure, it can be observed that GDP growth due to trade imports, GDP growth due to trade exports, and percentage of GDP spent by a country on research and development are the best subset of variables to predicting national income growth. 
+
+Given the output from the step-wise regression, the estimated model is a multiple linear regression model: y = 2.66172 + 0.13554x1 - 0.11286x2 - 0.59853x3.
+
+Now, the appropriate tests are performed on the previously defined model.
+
+The first step is to calculate the Sum Square for Errors (SSE).
+```{r}
+sse <- sum(step.model$residuals^2)
+sse
+
+```
+
+We now calculate the variance using the previous SSE value, divided by the degrees of freedom (n-k-1), and then obtain the square root to finally obtain the standard error. This value can also be found in the printout for the step-wise regression.
+```{r}
+k<-4
+n<-91
+s2<-sse/(n-k-1)
+s<-sqrt(s2)
+s
+```
+
+Now, tests for each of the different B parameters are performed, in order to check if they are significant. The test statistic and critical value method will be used.
+
+First, for B2.
+
+Hypothesis testing: Ho: B2=0 and H1: B2!=0
+```{r}
+t<-0.13554/0.04770
+t
+
+k<-4
+n<-91
+critical<-qt(0.05, n-k-1)
+critical
+
+
+#We define the rule
+if(t>critical){print("We reject the null hypothesis, so the parameter is significant")}  else {"We fail to reject the null hypothesis, so the parameter is insignificant"}
+```
+Since the test statistic is 2.841501 and the critical value is -1.662765, we reject the null hypothesis and conclude that the parameter is significant in the model.
+
+Now for B3.
+
+Hypothesis testing: Ho: B3=0 and H1: B3!=0
+```{r}
+t<-(-0.11286)/0.04016
+t
+
+k<-4
+n<-91
+critical<-qt(0.05, n-k-1)
+critical
+
+
+#We define the rule
+if(t>critical){print("We reject the null hypothesis, so the parameter is significant")}  else {"We fail to reject the null hypothesis, so the parameter is insignificant"}
+```
+Since the test statistic is -2.366038 and the critical value is -1.662765, we reject the null hypothesis and conclude that the parameter is significant in the model.
+
+And lastly, for B4.
+
+Hypothesis testing: Ho: B4=0 and H1: B4!=0
+```{r}
+t<-(-0.59853)/0.17013
+t
+
+k<-4
+n<-91
+critical<-qt(0.05, n-k-1)
+critical
+
+
+#We define the rule
+if(t>critical){print("We reject the null hypothesis, so the parameter is significant")}  else {"We fail to reject the null hypothesis, so the parameter is insignificant"}
+```
+Since the test statistic is -3.518074 and the critical value is -1.662765, we reject the null hypothesis and conclude that the parameter is significant in the model.
+
+Continuing with the tests, the values for both R2 and Ra2 are calculated.
+```{r}
+ssyy<-var(education$Income)*(n-1)
+ssyy
+
+ssexp<-ssyy-sse
+ssexp
+
+r2<-ssexp/ssyy
+r2
+
+n<-91
+k<-4
+
+ra2<-1-(((n-1)/(n-k-1))*(1-r2))
+ra2
+
+```
+As seen from the output, the coefficient of determination (r2) is 0.21, which means that around 21% of the variability of the income can be explained with the model, while the adjusted r2 (ra2) is  0.173.
+
+##Global F-Test
+Now the global test is performed, which measures the significance of all the parameters combined. This means that H0:B1=B2=...=0, and H1: at least 1 is not equal to 0.
+
+Begin by calculating the variability of the model (msmodel).
+```{r}
+msmodel<-ssexp/k
+msmodel
+```
+Then, the variance of the error (mse) is obtained.
+```{r}
+mse<-sse/(n-k-1)
+mse
+```
+The ratio of these two values is the f-test, which is shown in the following line:
+```{r}
+ftest<-msmodel/mse
+ftest
+```
+
+The next step is to calculate the critical value
+```{r}
+critical<-qf(0.05,k,n-k-1,lower.tail = F)
+critical
+```
+
+Due to the fact that the ftest statistic (5.730729) falls in the rejection region, we reject the null hypothesis that all the parameters are equal to 0. In other words, at least some of the parameters are significant, which is consisten with our previous testing.
+
+## Residuals Analysis
+
+The first step is to modify the data so that only the independent variables (B parameters) are taken into account for the residuals analysis.
+```{r}
+y<-education$Income
+remove<- c("LOCATION","LEVEL", "Income")
+income_f<-education[ , !(names(education) %in% remove)]
+View(income_f)
+```
+
+The next step is to run the full and step-wise regression, this part is just a repetition of the step-wise procedure that was performed previously.
+```{r}
+library(MASS)
+
+full.model <- lm(y ~., data = income_f)
+
+step.model <- stepAIC(full.model, direction = "both", 
+                      trace = FALSE)
+summary(step.model)
+model<-step.model
+```
+
+Plots are made for each of the variables, in order to visualize the residuals properly. A residual is the difference between an observed y value and its corresponding predicted value.
+
+```{r}
+library(ggplot2)
+library(gridExtra)
+plot1 <- ggplot(income_f, aes(RD_SPENDING_GDP, model$residuals)) +
+  geom_point() + geom_smooth(color = "firebrick") + geom_hline(yintercept = 0) +
+  theme_bw()
+plot2 <- ggplot(income_f, aes(GDP_IMPORTS, model$residuals)) +
+  geom_point() + geom_smooth(color = "firebrick") + geom_hline(yintercept = 0) +
+  theme_bw()
+plot3 <- ggplot(income_f, aes(GDP_EXPORTS, model$residuals)) +
+  geom_point() + geom_smooth(color = "firebrick") + geom_hline(yintercept = 0) +
+  theme_bw()
+
+grid.arrange(plot1, plot2, plot3)
+```
+
+Next, a graphical analysis for the homoskedasticity of the model is performed.
+```{r}
+#Homoskedasticity graphical analysis
+ggplot(income_f, aes(model$fitted.values, model$residuals)) +
+  geom_point() +
+  geom_smooth(color = "firebrick", se = FALSE) +
+  geom_hline(yintercept = 0) +
+  theme_bw()
+```
+The resulting graph somehow adopts the shape of a derivative function, and homoskedacity for this model is not so well appreciated. This means that some of the random variables may not have the same finite variance as the others.
+
+Now, the test for homoskedasticity is performed, with the use of the Breusch-Pagan test. The null hypothesis is that there is homoskedasiticity.
+```{r}
+library('zoo')
+#homoskedasticity tests
+library(lmtest)
+bptest(model)
+#We reject the assumption of homoskedasticity
+```
+As seen from the results printout, the p-value < 0.05, so there is enough evidence to reject the null hypothesis. In other words, the assumption of homoskedasticity is rejected, since there exists heterokedasticity.
+
+The residuals are now plotted graphically in order to analyze their normality.
+```{r}
+# Normality of the residuals Graphical analysys
+hist(model$residuals)
+qqnorm(model$residuals)
+qqline(model$residuals)
+```
+As seen from the first graph, it is safe to say that the residuals follow a relatively normal distribution, with slight skewness to the right, while the QQ plot shows the possibility of potential outliers.
+
+Now, the test for normality is performed (Shapiro). The null hypothesis is that the residuals follow a normal distribution.
+```{r}
+#Test
+shapiro.test(model$residuals)
+#H0: residuals are normal. We reject
+```
+Since the obtained p-value is approximately 0, the null hypothesis is rejected, which means that the distribution of the residuals is apparently not normal.
+
+next, the test to see if multicollinearity exists is performed, with the use of corrplot, in order to plot the multicollinearity matrix correlation.
+```{r}
+#Multicollinearity matrix correlation
+library(corrplot)
+corrplot(cor(dplyr::select(income_f, RD_SPENDING_GDP, GDP_IMPORTS, GDP_EXPORTS,)),
+         method = "number", tl.col = "black")
+```
+As seen from the obtained matrix, it seems that there are two variables which are extremely multicorrelated, these variables being GDP_EXPORTS and GDP_IMPORTS, since the multicollinearity value obtained is 0.99, which is greater than 0.8
+
+Lastly, we perform the Variance Inflation Factor (VIF) in order to see the amount of multicollinearity in the model. A high VIF will indicate that the associated independent variable is highly collinear with the other variables in the model. Also, if the VIF is greater than 10, there is multicollinearity.
+```{r}
+#VIF test
+#install.packages('car')
+library(car)
+vif(model)
+#Less than 10. No multicollinearity
+```
+As seen from the results, the VIF for both GDP_IMPORTS and GDP_EXPORTS are extremely high, and both are greater than 10, which once again proves that fact that both of these variables seem to be multicorrelated.
+
+## Conclusions and Recommendations
+
+From this analytical research, we can conclude that our initial hypothesis was wrong. Although expenditure on research and development proved to be the most significant variable in the model, level of education was ruled as insignificant to national income growth. Based on the literature, this means that it's likely that education levels do still have an effect on economics, although this effect may occur more prominently at the individual or micro level rather than the macro level (as was explored through this study). Investment in imports and exports proved to be significant, however these two variables showed high levels of multicollinearity. Therefore, it would be best to examine these factors separately or analyze them as an overall variable of investment in international trade (rather than splitting this into two variables). 
+
+The most significant limitation within this study was that no data was found for the development level of each country that would match the datasets already built for the other variables. This limitation is likely due to the methodology used within the study, therefore future research that uses different data could include the development level of a country as an independent variable to analyze.
+
+With regards to future research, it would be suggested to build off the effect that was found within research and development and expand on the details regarding this variable more. An analysis into the relationship between this variable and the size of a company may help on a microeconomic level to better understand how to strategically use this information for optimal economic efficiency on a larger scale. Future research could also compare the economic growth of different countries over time based on their wealth and investment in research and development.
+
+----------
+## Bibliography
+
+Akguc, M. (2010, September 29). The Effects of Different Stages of Education on Income across Countries. Iredu.u-Bourgogne. https://iredu.u-bourgogne.fr/images/stories/Documents/Textes_seminaires_iredu/sem090310.pdf
+
+Arshed, N. (2017, December 13). Education Enrollment Level and Income Inequality: A Case of SAARC Economies. Social Indicators Research. https://link.springer.com/article/10.1007/s11205-017-1824-9?error=cookies_not_supported&code=19acdc0f-ae28-4521-8c84-ceb9c0551ec3
+
+Azar Dufrechou, P. (2016, June). The economic impact of tertiary education: the role of public spending and skill choices. Department of Applied Economics, Universitat Autònoma de Barcelona, (p. 31). https://pagines.uab.cat/appliedeconomics/sites/pagines.uab.cat.appliedeconomics/files/Azar,%20P._paper.pdf
+
+Dubravska, M. & Sira, E. (2015). The Analysis of the Factors Influencing the International Trade of the Slovak Republic. ScienceDirect. https://www.sciencedirect.com/science/article/pii/S2212567115005699 
+
+Economic Growth: Causes, Benefits, and Current Limits. (2017, April 27). Center on Budget and Policy Priorities. https://www.cbpp.org/research/economy/economic-growth-causes-benefits-and-current-limits
+
+Gendron, W., Maredia, S., & Surani, S. (April, 2017). The Economic Impact of Research and Development. Georgia Tech Library. https://smartech.gatech.edu/handle/1853/56623 
+
+Ildirar, M., İşcan, E., & Özmen, M. (2016). The Effect of Research and Development Expenditures on Economic Growth: New Evidences. International Conference on Eurasian Economies. http://avekon.org/papers/1776.pdf 
+
+Newman, K. (November, 2014). What is the evidence on the impact of research on international development? UK Department for International Development. https://assets.publishing.service.gov.uk/media/57a089aced915d622c000343/impact-of-research-on-international-development.pdf 
+
+SAGE Journals: Your gateway to world-class research journals. (2013, August 19). SAGE Journals. https://journals.sagepub.com/action/cookieAbsent
+
+Sianesi, B., & Van Reenen, J. (2003). The Returns to Education: Macroeconomics. Worldbank. http://www1.worldbank.org/publicsector/pe/pfma07/Sianesi.pdf
+
+Torpey, E. (2018, April 10). Measuring the value of education : Career Outlook: U.S. Bureau of Labor Statistics. BLS. https://www.bls.gov/careeroutlook/2018/data-on-display/education-pays.html
+
+Van Vu, H. (2020, February 18). The Impact of Education on Household Income in Rural Vietnam. ITFS. https://www.mdpi.com/2227-7072/8/1/11/pdf
+
+What are the Benefits of Importing and Exporting Products? A&A. https://www.aacb.com/benefits-of-importing-and-exporting/ 
+
+Which Factors Can Influence a Country’s Balance of Trade? (18, December 2020). Investopedia. https://www.investopedia.com/ask/answers/041615/which-factors-can-influence-countrys-balance-trade.asp 
+
+Wolla, S. (September, 2018). How Do Imports Affect GDP? Economic Research Federal Reserve Bank of St. Louis. https://research.stlouisfed.org/publications/page1-econ/2018/09/04/how-do-imports-affect-gdp 
